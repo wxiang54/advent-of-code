@@ -1,0 +1,8 @@
+Last moved: A @ Loc(room=0, index=0)
+..,.,.,.,..
+  A|B|C|D  
+  A|B|C|D  
+..,.,.,.,..
+  A|B|C|D  
+  A|B|C|D  
+False

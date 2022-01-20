@@ -1,0 +1,339 @@
+inp w       *w1
+mul x 0     x = 0
+add x z     ..
+mod x 26    ..
+div z 1     z = 0
+
+add x 14    x = 14
+eql x w     x = 0 (w is single digit)
+eql x 0     x = 1
+
+mul y 0     y = 0
+add y 25    y = 25
+mul y x     ..
+add y 1     y = 26
+mul z y     z = 0
+
+mul y 0     y = 0
+add y w     y = w1
+add y 14    y = w1+14
+mul y x     ..
+add z y     z1 = w1+14
+=============
+
+inp w       *w2
+mul x 0
+add x z     x = z1 = w1+14
+mod x 26    .. (max z1 is 14+9=23)
+div z 1
+
+add x 14    x = w1+28
+eql x w     x = 0 (no overlap btwn 0..9 and 28+[0..9])
+eql x 0     x = 1
+
+mul y 0
+add y 25    y = 25
+mul y x     ..
+add y 1     y = 26
+mul z y     z = 26*z1
+
+mul y 0
+add y w
+add y 2     y = w2 + 2
+mul y x     ..
+add z y     z2 = 26*z1 + (w2+2)
+=============
+
+inp w       *w3
+mul x 0
+add x z
+mod x 26    x = w2+2
+div z 1
+
+add x 14    x = w2+16
+eql x w     x = 0 (9 < 1+16)
+eql x 0     x = 1
+
+mul y 0
+add y 25
+mul y x
+add y 1     y = 26
+mul z y     z = 26*z2
+
+mul y 0
+add y w
+add y 1     y = w3+1
+mul y x
+add z y     z3 = 26*z2 + (w3+1)
+=============
+
+inp w       *w4
+mul x 0
+add x z
+mod x 26    x = w3+1
+div z 1
+
+add x 12    x = w3+13
+eql x w
+eql x 0     x = 1 (9 < 1+13)
+
+mul y 0
+add y 25
+mul y x
+add y 1     y = 26
+mul z y     z = 26*z3
+
+mul y 0
+add y w
+add y 13    y = w4+13
+mul y x
+add z y     z4 = 26*z3 + (w4+13)
+
+=============
+inp w       *w5
+mul x 0
+add x z
+mod x 26    x = w4+13
+div z 1
+
+add x 15    x = w4+28
+eql x w
+eql x 0     x = 1
+
+mul y 0
+add y 25
+mul y x
+add y 1     y = 26
+mul z y     z = 26*z4
+
+mul y 0
+add y w
+add y 5     y = w5+5
+mul y x
+add z y     z5 = 26*z4 + (w5+5)
+=============
+
+inp w       *w6
+mul x 0
+add x z
+mod x 26    x = w5+5
+div z 26    z = z4
+
+add x -12   x = w5-7
+    [A] w6 == w5-7
+    [B] w6 != w5-7
+eql x w     x = 1 [A] or 0 [B]
+eql x 0     x = 0 [A] or 1 [B]
+
+mul y 0
+add y 25    y = 25
+mul y x     y = 0 [A] or 25 [B]
+add y 1     y = 1 [A] or 26 [B]
+mul z y     z = z4 [A] or 26*z4 [B]
+
+mul y 0
+add y w
+add y 5     y = w6+5
+mul y x     y = 0 [A] or w6+5 [B]
+add z y     z6 = z4 [A] or 26*z4 + (w6+5) [B]
+
+LOGIC: Must be [A] to cancel out
+
+=============
+
+inp w       *w7
+mul x 0
+add x z
+mod x 26    x = w4+13 [A] or w6+5 [B]
+div z 26    z = z3 [A] or z4 [B]
+
+add x -12   x = w4+1 [A] or w6-7 [B]
+    [C1]: [A] and w7 == w4+1
+    [C2]: [A] and w7 != w4+1
+    [D1]: [B] and w7 == w6-7
+    [D2]: [B] and w7 != w6-7
+eql x w     x = 1 [C1, D1] or 0 [C2, D2]
+eql x 0     x = 0 [C1, D1] or 1 [C2, D2]
+
+mul y 0
+add y 25
+mul y x     y = 0 [C1, D1] or 25 [C2, D2]
+add y 1     y = 1 [C1, D1] or 26 [C2, D2]
+mul z y     z = z3 [C1] or 26*z3 [C2] or z4 [D1] or 26*z4 [D2]
+
+mul y 0
+add y w
+add y 5     y = w7+5
+mul y x     y = 0 [C1, D1] or w7+5 [C2, D2]
+add z y     z7 = z3 [C1], 26*z3 + (w7+5) [C2], z4 [D1], 26*z4 + (w7+5) [D2]
+=============
+
+inp w       *w8
+mul x 0
+add x z     x = z7
+mod x 26    x = w3+1 [C1], w7+5 [C2, D2], w4+13 [D1]
+div z 1
+
+add x 12    x = w3+13 [C1], w7+17 [C2, D2], w4+25 [D1]
+eql x w
+eql x 0     x = 1
+
+mul y 0
+add y 25
+mul y x
+add y 1     y = 26
+mul z y     z = 26*z7
+
+mul y 0
+add y w
+add y 9     y = w8+9
+mul y x
+add z y     z8 = 26*z7 + (w8+9)
+=============
+
+inp w       *w9
+mul x 0
+add x z
+mod x 26    x = w8+9
+div z 26    z = z7
+
+add x -7    x = w8+2
+    [E1]: w9 == w8+2
+    [E2]: w9 != w8+2
+eql x w
+eql x 0     x = 0 [E1] or 1 [E2]
+
+mul y 0
+add y 25
+mul y x
+add y 1     y = 1 [E1] or 26 [E2]
+mul z y     z = z7 [E1] or 26*z7 [E2]
+
+mul y 0
+add y w
+add y 3     y = w9+3
+mul y x     y = 0 [E1] or w9+3 [E2]
+add z y     z9 = z7 [E1] or 26*z7 + (w9+5) [E2]
+=============
+
+inp w       *w10
+mul x 0
+add x z     x = z7 [E1] or 26*z7 + (w9+5) [E2]
+mod x 26    x = (w3+1 [C1], w7+5 [C2], w4+13 [D1], w7+5 [D2]) [E1]
+            x = w9+5 [E2]
+div z 1
+
+add x 13    x = something > 9
+eql x w
+eql x 0     x = 1
+
+mul y 0
+add y 25
+mul y x
+add y 1     y = 26
+mul z y     z = 26*z9
+
+mul y 0
+add y w
+add y 13    y = w10+13
+mul y x
+add z y     z10 = 26*z9 + (w10+13)
+=============
+
+inp w       *w11
+mul x 0
+add x z     x = 26*z9 + (w10+13)
+mod x 26    x = w10+13
+div z 26    z = z9
+
+add x -8    x = w10+5
+    [F1]: w11 == w10+5
+    [F2]: w11 != w10+5
+eql x w
+eql x 0     x = 0 [F1] or 1 [F2]
+
+mul y 0
+add y 25
+mul y x
+add y 1     y = 1 [F1] or 26 [F2]
+mul z y     z = z9 [F1] or 26*z9 [F2]
+
+mul y 0
+add y w
+add y 2     y = w11+2
+mul y x     y = 0 [F1] or w11+5 [F2]
+add z y     z11 = z9 [F1] or 26*z9 + (w11+5) [F2]
+=============
+
+inp w       *w12
+mul x 0
+add x z     x = z9 [F1] or 26*z9 + (w11+5) [F2]
+mod x 26    (x = (w3+1 [C1], w7+5 [C2], w4+13 [D1], w7+5 [D2]) [E1]
+            x = w9+5 [E2]) [F1]
+            x = w11+5 [F2]
+div z 26    (x = (z2 [C1], z3 [C2, D1], z4 [D2]) [E1], z7 [E2]) [F1]
+            x = z9 [F2]
+add x -5    (x = (w3-4 [C1], w7 [C2], w4+8 [D1], w7 [D2]) [E1], w9 [E2]) [F1]
+            x = w11 [F2]
+eql x w
+    G1: F1 and E1 and C1 and w12 == w3-4
+eql x 0
+
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+
+mul y 0
+add y w
+add y 1
+mul y x
+add z y
+=============
+
+inp w       *w13
+mul x 0
+add x z
+mod x 26
+div z 26
+
+add x -10
+eql x w
+eql x 0
+
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+
+mul y 0
+add y w
+add y 11
+mul y x
+add z y
+=============
+
+inp w       *w14
+mul x 0
+add x z
+mod x 26
+div z 26
+
+add x -7
+eql x w
+eql x 0
+
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+
+mul y 0
+add y w
+add y 8     y = w14+8
+mul y x     y' = x*y = -z: xy = -z
+add z y     z' = z+y = 0: z = -y
+            z' = 0

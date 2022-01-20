@@ -1,0 +1,59 @@
+Last moved: B @ Loc(room=-1, index=3)
+..,B,.,.,..
+  B|C|.|D  
+  A|D|C|A   cost=40
+
+Last moved: B @ Loc(room=-1, index=1)
+.B,B,.,.,..
+  .|C|.|D  
+  A|D|C|A   cost=20
+
+Last moved: B @ Loc(room=-1, index=0)
+B.,B,.,.,..
+  .|C|.|D  
+  A|D|C|A   cost=30
+
+Last moved: C @ Loc(room=-1, index=5)
+..,B,C,.,..
+  B|.|.|D  
+  A|D|C|A   cost=200
+
+Last moved: Room(lower=3, upper='.') @ Loc(room=2, index=1)
+..,B,.,.,..
+  B|.|C|D  
+  A|D|C|A   cost=400
+
+Last moved: C @ Loc(room=-1, index=7)
+..,B,.,C,..
+  B|.|.|D  
+  A|D|C|A   cost=400
+
+Last moved: C @ Loc(room=-1, index=9)
+..,B,.,.,C.
+  B|.|.|D  
+  A|D|C|A   cost=600
+
+Last moved: C @ Loc(room=-1, index=10)
+..,B,.,.,.C
+  B|.|.|D  
+  A|D|C|A   cost=700
+
+Last moved: D @ Loc(room=-1, index=7)
+..,B,.,D,..
+  B|C|.|.  
+  A|D|C|A   cost=2000
+
+Last moved: D @ Loc(room=-1, index=5)
+..,B,D,.,..
+  B|C|.|.  
+  A|D|C|A   cost=4000
+
+Last moved: D @ Loc(room=-1, index=9)
+..,B,.,.,D.
+  B|C|.|.  
+  A|D|C|A   cost=2000
+
+Last moved: D @ Loc(room=-1, index=10)
+..,B,.,.,.D
+  B|C|.|.  
+  A|D|C|A   cost=3000

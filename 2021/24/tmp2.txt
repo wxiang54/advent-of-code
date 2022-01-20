@@ -1,0 +1,185 @@
+inp w None      w1 = 1..9
+add y w         y = w1
+add y 14        y = w1 + 14
+add z y         z1 = w1 + 14
+
+inp y 26        y = 26
+mul z y         z2 = z*y = 26 * z1
+=============
+
+inp w None      w2 = 1..9
+inp y 0         y = 0
+add y w         y = w2
+add y 2         y = w2 + 2
+add z y         z2 = 26*z1 + (w2+2)
+
+inp y 26        y = 26
+mul z y         z3 = 26(26(w1+14) + (w2+2)) = 26*z2
+=============
+
+inp w None      w3 = 1..9
+inp y 0
+add y w
+add y 1         y = w3 + 1
+add z y         z3 = 26(26(w1+14)+(w2+2)) + (w3+1) = 26*z2 + (w3+1)
+
+inp y 26
+mul z y     z4 = 26 * z3
+=============
+
+inp w None  w4
+inp y 0
+add y w
+add y 13    y = w4 + 13
+add z y     z4 = 26*z3 + (w4 + 13)
+
+inp y 26
+mul z y     z5 = 26 * z4
+=============
+
+inp w None  *w5
+inp y 0
+add y w
+add y 5     y = w5 + 5
+add z y     z5 = 26*z4 + (w5 + 5)
+
+inp w None  *w6
+add x z     x = z5 = 26*z4 + (w5 + 5)
+mod x 26    x = (w5 + 5)
+div z 26    z' = z4, since w5+5 < 26
+add x -12   x = w5 - 7
+eql x w     x = 1 (if w6 == w5-7) or 0 (if w6 != w5-7)
+eql x 0     x = 0 (if w6 == w5-7) or 1 (if w6 != w5-7)
+
+inp y 25    y = 25
+mul y x     y = 0 (if w6 == w5-7) or 25 (if w6 != w5-7)
+add y 1     y = 1 (if w6 == w5-7) or 26 (if w6 != w5-7)
+mul z y     z = z4 (if w6 == w5-7) or 26*z4 (if w6 != w5-7)
+
+inp y 0
+add y w
+add y 5     y = w6 + 5
+mul y x     y = 0 (if w6 == w5-7) or w6+5 (if w6 != w5-7)
+inp x 0     x = 0
+add z y     z6 = z4 (if w6 == w5-7) or [26*z4 + (w6+5)] (if w6 != w5-7)
+
+inp y 25    y = 25
+inp w None  *w7
+add x z     x =
+
+mod x 26
+div z 26
+add x -12
+eql x w
+eql x 0
+mul y x
+add y 1
+mul z y
+
+inp y 0
+add y w
+add y 5
+mul y x
+inp x 0
+add z y
+inp y 26
+inp w None  *w8
+mul z y
+inp y 0
+add y w
+add y 9
+add z y
+inp y 25
+inp w None  *w9
+add x z
+mod x 26
+div z 26
+add x -7
+eql x w
+eql x 0
+mul y x
+add y 1
+mul z y
+inp y 0
+add y w
+add y 3
+mul y x
+inp x 0
+add z y
+inp y 26
+inp w None  *w10
+mul z y
+inp y 0
+add y w
+add y 13
+add z y
+inp y 25
+inp w None  *w11
+add x z
+mod x 26
+div z 26
+add x -8
+eql x w
+eql x 0
+mul y x
+add y 1
+mul z y
+inp y 0
+add y w
+add y 2
+mul y x
+inp x 0
+add z y
+inp y 25
+inp w None  *w12
+add x z
+mod x 26
+div z 26
+add x -5
+eql x w
+eql x 0
+mul y x
+add y 1
+mul z y
+inp y 0
+add y w
+add y 1
+mul y x
+inp x 0
+add z y
+inp y 25
+inp w None  *w13
+add x z
+mod x 26
+div z 26
+add x -10
+eql x w
+eql x 0
+mul y x
+add y 1
+mul z y
+inp y 0
+add y w
+add y 11
+mul y x
+inp x 0
+add z y
+inp y 25
+
+inp w None  *w14
+add x z
+mod x 26
+div z 26
+add x -7
+eql x w
+eql x 0     x' = x==0
+mul y x     y' = y*x = -(w+8)*x/z - 1   (y=[-(w+8)*x/z - 1]/x)
+add y 1     y' = y+1 = -(w+8)*x/z   (y=-(w+8)*x/z - 1)
+mul z y     z' = z*y = (w+8)*-x (z=-(w+8)*x/y, y=-(w+8)*x/z)
+
+inp y 0     y' = 0 = -z/x - w-8 (w=-z/x-8, z=(w+8)*-x)
+add y w     y' = y+w = -z/x - 8 (y= -z/x - w - 8)
+add y 8     y' = y+8 = -z/x (y=-z/x - 8)
+mul y x     y' = y*x = -z   (y=-z/x, x=-z/y, z=-xy)
+add z y     z' = z+y = 0    (z=-y, y=-z)
+            z' = 0
