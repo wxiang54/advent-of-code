@@ -1,4 +1,4 @@
-## Advent of Code, Dec '21
+## Advent of Code, Dec '21  |  ⭐×50  |  Python
 
 1. **[Sonar Sweep](https://adventofcode.com/2021/day/1)**: Count increases in sequence of numbers.
 2. **[Dive!](https://adventofcode.com/2021/day/2)**: Simulate 2D movement with `forward`, `up`, and `down` commands.
